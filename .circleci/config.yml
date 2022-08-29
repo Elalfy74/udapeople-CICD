@@ -212,7 +212,7 @@ jobs:
       - install_awscli
       - install_ansible
       - add_ssh_keys:
-          fingerprints: ["31:b7:1c:fd:5e:58:9d:2a:55:46:bc:5c:b4:1f:f1:d5"]
+          fingerprints: ["cb:45:55:1f:2b:c8:aa:62:20:4a:9b:21:f9:09:e2:ca"]
       - attach_workspace:
           at: ~/
       - run:
@@ -295,7 +295,7 @@ jobs:
       - restore_cache:
           keys: [backend-build-dep]
       - add_ssh_keys:
-          fingerprints: ["31:b7:1c:fd:5e:58:9d:2a:55:46:bc:5c:b4:1f:f1:d5"]
+          fingerprints: ["cb:45:55:1f:2b:c8:aa:62:20:4a:9b:21:f9:09:e2:ca"]
       - attach_workspace:
           at: ~/
       - run:
@@ -343,8 +343,10 @@ jobs:
               export API_URL=http://${BACKEND_PUBLIC_IP}:3030
               if curl -s $API_URL/api/status | grep "ok"
               then
+                echo "Backend is up and running"
                 exit 0
               else
+                echo "Backend is down"
                 exit 1
               fi
       - run:
@@ -354,8 +356,10 @@ jobs:
             echo $FRONTEND_WEBSITE_URL
             if curl -s $FRONTEND_WEBSITE_URL | grep "Welcome"
             then
+              echo "Frontend is up and running"
               exit 0
             else
+              echo "Frontend is down"
               exit 1
             fi
       - destroy-environment
